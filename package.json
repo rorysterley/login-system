@@ -1,0 +1,15 @@
+{
+  "name": "login-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "dependencies": {
+    "angular": "^1.3.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rory Sterley (rorysterley@gmail.com)",
+  "license": "MIT"
+}
