@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html ng-app='loginSystem'>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login System</title>
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+<body>
+  <div ng-controller="LoginViewController as view" class="row">
+    <div ng-controller="UserDataController as userData">
+
+      <!-- Login -->
+      <div class="login col-md-6 col-md-offset-3" ng-show="view.isSet('login')">
+        <h1>Login</h1>
+        <form name="loginform" class="form-group" 
+              ng-controller="LoginController as loginCtrl"
+              ng-submit="loginCtrl.login(loginCtrl.credentials)">
+          <label name="email">Email</label>
+          <input type="email" name="email" 
+              ng-model="loginCtrl.credentials.email" placeholder="Email"
+              required/>
+          <label name="password">Password</label>
+          <input type="password" name="password" 
+              ng-model="loginCtrl.credentials.password" placeholder="Password"
+              required/>
+          <input class="btn btn-primary" type="submit" value="Login"><br>
+        </form>
+        <form ng-submit="view.setView('create-account')">
+          <input class="btn btn-link" type="submit" value="Create New User">
+        </form>
+      </div>
+
+      <!-- Logged In -->
+      <div class="logged-in col-md-6 col-md-offset-3" 
+                  ng-show="view.isSet('logged-in')">
+        <h1>Welcome {{userData.activeUser.firstName}} {{userData.activeUser.lastName}}</h1>
+        <form ng-submit="view.setView('account-settings')">
+          <input class="btn" type="submit" value="Account Settings">
+        </form>
+        <form ng-submit="view.setView('login')">
+          <input class="btn btn-link" type="submit" value="Log Out">
+        </form>
+      </div>
+
+      <!-- Create Account -->
+      <div class="create-account" ng-show="view.isSet('create-account')">
+        <div class="col-md-4 col-md-offset-2">
+          <h1>Create Account</h1>
+          <form name="form" ng-submit="form.$valid && 
+                            userData.addUser(userData.user)" novalidate>
+            <fieldset class="form-group">
+              <label>First name:</label><br>
+              <input type="text" name="firstname" ng-model="userData.user.firstName" placeholder="John" required><br>
+              <label>Last name:</label><br>
+              <input type="text" name="lastname" ng-model="userData.user.lastName" placeholder="Doe" required><br>
+              <label>Email:</label><br>
+              <input type="email" name="email" ng-model="userData.user.email" placeholder="johndoe@example.com" required><br>
+              <label>Password:</label><br>
+              <input type="password" name="password" ng-model="userData.user.password" placeholder="your cat's name" required>
+            </fieldset>
+            <input class="btn btn-primary" type="submit" value="Submit">
+          </form>
+          <br>
+          <form ng-submit="view.setView('login')">
+            <input class="btn btn-link" type="submit" value="Back to login">
+          </form>
+        </div>
+        <div class="col-md-4">
+          <h1>Account Preview</h1>
+          <strong>First name: </strong>{{userData.user.firstName}}<br>
+          <strong>Last name: </strong>{{userData.user.lastName}}<br>
+          <strong>Email: </strong>{{userData.user.email}}
+        </div>
+      </div>
+
+      <!-- Account Settings -->
+      <div class="account-settings col-md-4 col-md-offset-4" ng-show="view.isSet('account-settings')">
+        <h1>Account Settings</h1>
+        <strong>First name: </strong>{{userData.activeUser.firstName}}<br>
+        <strong>Last name: </strong>{{userData.activeUser.lastName}}<br>
+        <strong>Email: </strong>{{userData.activeUser.email}}<br>
+        <br>
+        <form ng-submit="userData.editUserFirstName(userData.updatingUser)">
+          <label>New first name:</label><br>
+          <input type="text" name="newfirstname" ng-model="userData.updatingUser.firstName" required>
+          <input class="btn" type="submit" value="Submit">
+        </form>
+        <form ng-submit="userData.editUserLastName(userData.updatingUser)">
+          <label>New last name:</label><br>
+          <input type="text" name="newlastname" ng-model="userData.updatingUser.lastName" required>
+          <input class="btn" type="submit" value="Submit">
+        </form>
+        <form ng-submit="userData.editUserEmail(userData.updatingUser)">
+          <label>New email:</label><br>
+          <input type="email" name="newemail" ng-model="userData.updatingUser.email" required>
+          <input class="btn" type="submit" value="Submit">
+        </form>
+        <form ng-submit="userData.editUserPassword(userData.updatingUser)">
+          <label>New password:</label><br>
+          <input type="password" name="newpassword" ng-model="userData.updatingUser.password" required>
+          <input class="btn" type="submit" value="Submit">
+        </form>
+        <form ng-submit="view.setView('logged-in')">
+          <input class="btn btn-link" type="submit" value="Back">
+        </form>
+        <form ng-submit="view.setView('login')">
+          <input class="btn btn-link" type="submit" value="Log Out">
+        </form>
+
+        <h1>Delete User</h1>
+        <form ng-submit="userData.deleteUser(userData.activeUser)">
+          <input class="btn btn-danger" type="submit" value="DELETE USER">
+        </form>
+
+      </div>
+    </div>
+  </div>
+  <script src="js/angular.min.js" type="text/javascript"></script>
+  <script src="js/app.js" type="text/javascript"></script>
+</body>
+</html>
